@@ -1,0 +1,48 @@
+{% extends "base.html"%} {% block content%}
+<div class="col-lg-6 col-sm-10 mx-auto">
+    <div class="text-center mt-2   ">
+
+        <img src="https://buildinglives.org/wp-content/uploads/top-10-ways-to-monetize-a-website-donate-button-1.jpg" class="img-fluid img-responsive" style="height:25%;">
+
+    </div>
+    {%if f%}
+    <div id="back"></div>
+    <div id="front"></div>
+    <div class="animate__animated animate__zoomInDown alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p style="text-align:center;"> {% for mess in messages%} ({{mess}}) {%endfor%}</p>
+    </div>
+
+    {%endif%}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputEmail1">Enter Name</label>
+            <input type="text" class="form-control" width=80% name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+        </div>
+        <div class="form-group">
+            <label for="email">Enter Email</label>
+            <input type="email" name="email" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Enter Amount</label>
+            <input type="number" name="amount" class="form-control" id="exampleInputPassword1">
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block mb-2">Submit</button>
+        <a href="../" class="btn btn-success btn-block">back</a>
+    </form>
+</div>
+{%if payment%}
+<div class="text-center mx-auto">
+    <form action="../success/" method="POST">
+        {% csrf_token %}
+        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_ZeRLUFQpel2sO4" data-amount="{{payment.amount}}" paise data-currency="INR" data-order_id="{{payment.id}}" data-buttontext="Pay with Razorpay" data-name="payments Corp" data-description="Test transaction"
+            data-theme.color="#F37254">
+        </script>
+        <input type="hidden" custom="Hidden Element" name="hidden">
+    </form>
+</div>
+{%endif%} {%endblock%}
